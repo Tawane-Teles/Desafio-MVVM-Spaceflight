@@ -1,6 +1,6 @@
 package com.spaceflight.network
 
-import com.spaceflight.network.response.NewResponse
+import com.spaceflight.network.response.NewsResponse
 import kotlinx.coroutines.Deferred
 import okhttp3.Response
 import retrofit2.http.GET

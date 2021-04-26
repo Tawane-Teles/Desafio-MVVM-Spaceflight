@@ -2,7 +2,7 @@ package com.spaceflight.network.response
 
 import com.squareup.moshi.Json
 
-data class NewResponse(
+data class NewsResponse(
     @Json(name = "id")
     var id: String,
 
