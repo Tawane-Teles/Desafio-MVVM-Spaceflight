@@ -17,10 +17,11 @@ class DesafioAplication : Application() {
         super.onCreate()
         instace = applicationContext
 
+        setupHawk()
         setupKoin()
     }
 
-    private fun setupKoin(){
+    private fun setupKoin() {
         startKoin {
             androidLogger(Level.ERROR)
             androidContext(this@DesafioAplication)
@@ -29,7 +30,7 @@ class DesafioAplication : Application() {
         }
     }
 
-    private fun setupHawk () = Hawk.init(this).build()
+    private fun setupHawk() = Hawk.init(this).build()
 
     companion object {
         lateinit var instace: Context
