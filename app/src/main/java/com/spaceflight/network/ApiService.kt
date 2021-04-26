@@ -12,5 +12,5 @@ interface ApiService {
     fun getNews(
         @Query("_limit") limit: Int,
         @Query("_start") start: Int
-    ) : Deferred<Response<List<NewResponse>>>
+    ) : Deferred<Response<List<NewsResponse>>>
 }
