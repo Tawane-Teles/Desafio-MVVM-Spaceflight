@@ -7,6 +7,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
+    object getNews {
+        operator fun invoke(limit: Int, start: Int) {
+
+        }
+    }
 
     @GET("/api/v2/articles")
     fun getNews(

@@ -2,9 +2,12 @@ package com.spaceflight.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.spaceflight.network.ApiService
+import com.spaceflight.repository.NewsRepository
+import com.spaceflight.ui.HomeViewModel
 import com.spaceflight.utils.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,11 +20,11 @@ val applicationModule = module {
 }
 
 val viewModelModule = module {
-
+    viewModel { HomeViewModel(get()) }
 }
 
 val repositoryModule = module {
-
+    factory { NewsRepository(get()) }
 }
 
 private fun providerHttpLoggingInterceptor(): HttpLoggingInterceptor =
