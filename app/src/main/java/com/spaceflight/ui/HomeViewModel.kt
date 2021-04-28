@@ -18,7 +18,9 @@ class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScop
         launch {
             try {
                 val response = repository.getNews(15, 1)
-                if (response.isSuccessful)
+                if (response.isSuccessful){
+
+                }
 
             }catch (e: Exception){
 
