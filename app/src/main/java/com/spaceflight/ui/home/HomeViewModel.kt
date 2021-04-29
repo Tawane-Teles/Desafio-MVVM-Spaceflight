@@ -10,7 +10,7 @@ import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScope {
 
-    var listener: HomeViewModel? = null
+    var listener: HomeListener? = null
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -21,7 +21,7 @@ class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScop
             try {
                 val response = repository.getNews(15, 1)
                 if (response.isSuccessful) {
-                    listener!!.apiSucess()
+                    listener!!.apiSuccess()
                 } else {
                     listener!!.apiError("Error Carregar Lista")
                 }
