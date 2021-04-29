@@ -6,13 +6,13 @@
     <data>
         <variable
             name="viemodel"
-            type="com.spaceflight.ui.HomeViewModel" />
+            type="com.spaceflight.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.HomeActivity">
+        tools:context=".ui.home.HomeActivity">
 
         <ProgressBar
             android:id="@+id/progressBar"

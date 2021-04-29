@@ -1,7 +1,8 @@
-package com.spaceflight.ui
+package com.spaceflight.ui.home
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.databinding.DataBindingUtil
 import com.spaceflight.R
 import com.spaceflight.databinding.ActivityHomeBinding
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -12,9 +13,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+        initViewModel()
 
     }
 
-    private fun initViewModel
+    private fun initViewModel() {
+        binding.viemodel = viewModel
+
+    }
 }

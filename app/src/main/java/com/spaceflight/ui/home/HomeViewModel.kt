@@ -1,4 +1,4 @@
-package com.spaceflight.ui
+package com.spaceflight.ui.home
 
 import androidx.lifecycle.ViewModel
 import com.spaceflight.repository.NewsRepository
@@ -10,6 +10,8 @@ import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScope {
 
+    var listener: HomeViewModel? = null
+
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO + job
@@ -18,15 +20,15 @@ class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScop
         launch {
             try {
                 val response = repository.getNews(15, 1)
-                if (response.isSuccessful){
-
+                if (response.isSuccessful) {
+                    listener!!.apiSucess()
+                } else {
+                    listener!!.apiError("Error Carregar Lista")
                 }
-
-            }catch (e: Exception){
+            } catch (e: Exception){
+                listener!!.apiError("Error Carregar Lista")
 
             }
         }
     }
-
-
 }
