@@ -21,6 +21,7 @@ class HomeViewModel(val repository: NewsRepository) : ViewModel(), CoroutineScop
             try {
                 val response = repository.getNews(15, 1)
                 if (response.isSuccessful) {
+                    repository.saveNews(response.body()!!)
                     listener!!.apiSuccess()
                 } else {
                     listener!!.apiError("Error Carregar Lista")
