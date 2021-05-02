@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.spaceflight.databinding.ActivityHomeBinding
 import com.spaceflight.databinding.FragmentNewsBinding
 import com.spaceflight.network.response.NewsResponse
+import com.spaceflight.ui.adapter.NewsRecyclerAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -17,6 +19,8 @@ class NewsFragment : Fragment() {
 
     private val viewModel: NewsViewModel by viewModel()
     lateinit var binding: FragmentNewsBinding
+
+    private var adapterNews = NewsRecyclerAdapter(this::getNews)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,16 +38,24 @@ class NewsFragment : Fragment() {
 
     }
 
-    private fun initViews() {}
+    private fun initViews() {
+        binding.newList.layoutManager = LinearLayoutManager(context)
+        binding.newList.adapter = adapterNews
+    }
 
     private fun initViewModel() {
         binding.viewmodel = viewModel
         viewModel.initViewModel()
 
-        viewModel.newList.observe(requireActivity(), Observer< List<NewsResponse>>{
+        viewModel.newList.observe(requireActivity(), Observer<List<NewsResponse>> {
 
 
-        }
+
+        })
+
+    }
+
+    private fun getNews(obj: NewsResponse){
 
     }
 }
