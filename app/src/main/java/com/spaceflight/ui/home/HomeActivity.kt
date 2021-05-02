@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.spaceflight.R
 import com.spaceflight.databinding.ActivityHomeBinding
+import com.spaceflight.ui.fragment.NewsFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity(), HomeListener {
@@ -28,8 +29,10 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     }
 
     override fun apiSuccess() {
-        binding.progressBar.visibility = View.GONE
-        Toast.makeText(this, "Sucesso", Toast.LENGTH_LONG).show()
+     val frameLayout = NewsFragment()
+        val transition = supportFragmentManager.beginTransaction()
+        transition.replace(R.id.containerID, frameLayout)
+        transition.commit()
     }
 
     override fun apiError(message: String) {

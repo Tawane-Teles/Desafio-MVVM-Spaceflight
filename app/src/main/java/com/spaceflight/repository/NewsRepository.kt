@@ -12,7 +12,7 @@ class NewsRepository(private val apiService: ApiService) {
         Hawk.put("news", "news")
     }
 
-    fun getNews(): List<NewsResponse?> {
+    fun getNews(): List<NewsResponse> {
         return Hawk.get("news")
     }
 }
