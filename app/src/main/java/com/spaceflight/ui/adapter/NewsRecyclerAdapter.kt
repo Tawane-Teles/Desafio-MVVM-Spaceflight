@@ -13,7 +13,7 @@ import com.spaceflight.network.response.NewsResponse
 import kotlin.properties.Delegates
 
 class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
-    RecyclerView.Adapter<NewsRecyclerAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ViewHolder>() {
 
     var items: List<NewsResponse> by Delegates.observable(emptyList()) { _, old, new ->
         if (old != new) notifyDataSetChanged()
@@ -24,6 +24,20 @@ class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
     }
 
     var filterList = ArrayList<NewsResponse>()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.item_space, parent, false)
+        return ViewHolder(view)
+    }
+
+    override fun getItemCount(): Int {
+        return items.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val newsResponse = items[position]
+        holder.bind(newsResponse, ApiService.getNews)
+    }
 
 }
 
@@ -37,20 +51,4 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         Glide.with(image.context).load(newsResponse.imageUrl).into(image)
     }
 
-}
-
-override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val layoutInflater = LayoutInflater.from(parent.context)
-    val view = layoutInflater.inflate(R.layout.item_space, parent, false)
-    return ViewHolder(view)
-}
-
-override fun getItemCount(): Int {
-    return items.size
-}
-
-override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-    val newsResponse = items[position]
-    holder.bind(newsResponse, ApiService.getNews)
-}
 }
