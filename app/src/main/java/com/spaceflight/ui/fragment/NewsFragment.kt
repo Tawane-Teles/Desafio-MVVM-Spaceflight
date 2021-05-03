@@ -46,6 +46,7 @@ class NewsFragment : Fragment(), NewsListener {
 
     private fun initViewModel() {
         binding.viewmodel = viewModel
+        viewModel.listener = this
         viewModel.initViewModel()
 
         viewModel.newList.observe(requireActivity(), Observer<List<NewsResponse>> {
@@ -53,23 +54,24 @@ class NewsFragment : Fragment(), NewsListener {
             adapterNews.newsList = it
 
 
-
         })
 
     }
 
-    private fun getNews(obj: NewsResponse){
+    private fun getNews(obj: NewsResponse) {
 
     }
 
     override fun onSearch() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                TODO("Not yet implemented")
+                adapterNews.filter.filter(query)
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                TODO("Not yet implemented")
+                adapterNews.filter.filter(newText)
+                return true
             }
 
         })

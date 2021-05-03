@@ -42,7 +42,33 @@ class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
     }
 
     override fun getFilter(): Filter {
-        TODO("Not yet implemented")
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charResult = constraint.toString()
+                filterList = if (charResult.isEmpty()) {
+                    newsList as ArrayList<NewsResponse>
+                } else {
+                    val resultList = ArrayList<NewsResponse>()
+                    for (row in newsList) {
+                        if (row.title?.toLowerCase()
+                                ?.contains(constraint.toString().toLowerCase())!!
+                        )
+                            resultList.add(row)
+                    }
+                    resultList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = filterList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                items = results?.values as List<NewsResponse>
+                notifyDataSetChanged()
+            }
+
+        }
     }
 
 }
