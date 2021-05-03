@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,7 @@ import com.spaceflight.ui.adapter.NewsRecyclerAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class NewsFragment : Fragment() {
+class NewsFragment : Fragment(), NewsListener {
 
     private val viewModel: NewsViewModel by viewModel()
     lateinit var binding: FragmentNewsBinding
@@ -59,5 +60,18 @@ class NewsFragment : Fragment() {
 
     private fun getNews(obj: NewsResponse){
 
+    }
+
+    override fun onSearch() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }

@@ -3,6 +3,8 @@ package com.spaceflight.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +15,7 @@ import com.spaceflight.network.response.NewsResponse
 import kotlin.properties.Delegates
 
 class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
-    RecyclerView.Adapter<ViewHolder>() {
+    RecyclerView.Adapter<ViewHolder>(), Filterable {
 
     var items: List<NewsResponse> by Delegates.observable(emptyList()) { _, old, new ->
         if (old != new) notifyDataSetChanged()
@@ -37,6 +39,10 @@ class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val newsResponse = items[position]
         holder.bind(newsResponse, ApiService.getNews)
+    }
+
+    override fun getFilter(): Filter {
+        TODO("Not yet implemented")
     }
 
 }
