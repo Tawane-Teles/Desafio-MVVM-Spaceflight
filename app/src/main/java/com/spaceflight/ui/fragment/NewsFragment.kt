@@ -59,6 +59,7 @@ class NewsFragment : Fragment(), NewsListener {
     }
 
     private fun getNews(obj: NewsResponse) {
+        viewModel.saveClick(obj)
 
     }
 

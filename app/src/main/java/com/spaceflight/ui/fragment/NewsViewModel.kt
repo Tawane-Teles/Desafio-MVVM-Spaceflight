@@ -20,4 +20,11 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel() {
 
     }
 
+    fun saveClick(newsResponse: NewsResponse){
+        repository.saveClick(newsResponse)
+
+    }
+
+
+
 }
