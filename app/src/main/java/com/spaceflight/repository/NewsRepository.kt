@@ -9,7 +9,7 @@ class NewsRepository(private val apiService: ApiService) {
     suspend fun getNews(limit: Int, start: Int) = apiService.getNews(limit, start).await()
 
     fun saveNews(news: List<NewsResponse?>) {
-        Hawk.put("news", "news")
+        Hawk.put("news", news)
     }
 
     fun getNews(): List<NewsResponse> {
