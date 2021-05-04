@@ -51,7 +51,7 @@ class NewsFragment : Fragment(), NewsListener {
         viewModel.initViewModel()
 
         viewModel.newList.observe(requireActivity(), Observer<List<NewsResponse>> {
-            adapterNews.items - it
+            adapterNews.items = it
             adapterNews.newsList = it
 
 
