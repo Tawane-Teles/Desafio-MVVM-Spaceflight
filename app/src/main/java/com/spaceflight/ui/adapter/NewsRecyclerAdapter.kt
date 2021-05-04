@@ -39,7 +39,7 @@ class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val newsResponse = items[position]
-        holder.bind(newsResponse, ApiService.getNews)
+        holder.bind(newsResponse, getNews)
     }
 
     override fun getFilter(): Filter {
@@ -75,7 +75,7 @@ class NewsRecyclerAdapter(private val getNews: (NewsResponse) -> Unit) :
 }
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    fun bind(newsResponse: NewsResponse, getNews: ApiService.getNews) {
+    fun bind(newsResponse: NewsResponse, getNews: (NewsResponse) -> Unit) {
         val name = itemView.findViewById<TextView>(R.id.textTitle)
         val image = itemView.findViewById<ImageView>(R.id.imageView)
         val click = itemView.findViewById<ConstraintLayout>(R.id.itemClick)
@@ -85,7 +85,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         Glide.with(image.context).load(newsResponse.imageUrl).into(image)
 
         click.setOnClickListener {
-            getNews(newsResponse)
+           getNews(newsResponse)
         }
     }
 
