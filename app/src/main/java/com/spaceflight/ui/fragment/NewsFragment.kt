@@ -1,15 +1,15 @@
 package com.spaceflight.ui.fragment
 
-import android.os.Binder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.view.ViewCompat.canScrollVertically
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.spaceflight.databinding.ActivityHomeBinding
+import androidx.recyclerview.widget.RecyclerView
 import com.spaceflight.databinding.FragmentNewsBinding
 import com.spaceflight.network.response.NewsResponse
 import com.spaceflight.ui.adapter.NewsRecyclerAdapter
@@ -23,6 +23,8 @@ class NewsFragment : Fragment(), NewsListener {
     lateinit var binding: FragmentNewsBinding
 
     private var adapterNews = NewsRecyclerAdapter(this::getNews)
+
+    private var numPage = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +45,22 @@ class NewsFragment : Fragment(), NewsListener {
     private fun initViews() {
         binding.newList.layoutManager = LinearLayoutManager(context)
         binding.newList.adapter = adapterNews
+
+        binding.newList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!canScrollVertically(
+                        recyclerView,
+                        1
+                    ) && newState == RecyclerView.SCROLL_STATE_IDLE
+                ) {
+
+                    numPage + -15
+                    viewModel.getNewsPage(numPage)
+
+                }
+            }
+        })
     }
 
     private fun initViewModel() {
