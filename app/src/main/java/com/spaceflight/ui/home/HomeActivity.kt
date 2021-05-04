@@ -1,9 +1,9 @@
 package com.spaceflight.ui.home
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.spaceflight.R
 import com.spaceflight.databinding.ActivityHomeBinding
@@ -29,7 +29,7 @@ class HomeActivity : AppCompatActivity(), HomeListener {
     }
 
     override fun apiSuccess() {
-     val frameLayout = NewsFragment()
+        val frameLayout = NewsFragment()
         val transition = supportFragmentManager.beginTransaction()
         transition.replace(R.id.containerID, frameLayout)
         transition.commit()
