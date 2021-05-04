@@ -53,6 +53,7 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel(), Corou
 
                 }
             } catch (e: Exception){
+                _newsList.postValue(arrayListOf())
 
             }
         }

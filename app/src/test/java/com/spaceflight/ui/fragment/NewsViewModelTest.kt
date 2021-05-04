@@ -1,4 +1,4 @@
-package com.spaceflight.ui.home
+package com.spaceflight.ui.fragment
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -23,19 +23,19 @@ import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner.Silent::class)
 @ExperimentalCoroutinesApi
-class HomeViewModelTest {
+class NewsViewModelTest {
     private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: NewsViewModel
 
     @Mock
     private lateinit var repository: NewsRepository
 
     @Mock
-    private lateinit var listener: HomeListener
+    private lateinit var listener: NewsListener
 
     @Mock
     private lateinit var newObservable: Observer<List<NewsResponse>>
@@ -44,19 +44,39 @@ class HomeViewModelTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
         Dispatchers.setMain(dispatcher)
-        viewModel = HomeViewModel(repository)
+        viewModel = NewsViewModel(repository)
 
     }
 
     @Test
-    fun getNewsError() = TestCoroutineDispatcher().runBlockingTest {
+    fun initViewModel() {
+        val newsResponse: List<NewsResponse> = arrayListOf()
+        viewModel.listener = listener
+        viewModel.newList.observeForever(newObservable)
+        viewModel.initViewModel()
+
+        verify(newObservable).onChanged(newsResponse)
+        verify(listener).onSearch()
+
+    }
+
+
+    @Test
+    fun saveClick() {
+        viewModel.listener = listener
+        viewModel.saveClick(NewsResponse(id = "1" , title ="teste" , summary ="teste descrição" , newsSite = "", imageUrl = "", featured = false ,url = "", events = arrayListOf(), launcher = arrayListOf()))
+    }
+
+    @Test
+    fun getNewsPage() = TestCoroutineDispatcher().runBlockingTest {
         val newsResponse: List<NewsResponse> = arrayListOf()
         Mockito.`when`(repository.getNews(1, 1)).thenReturn(Response.success(newsResponse))
 
         viewModel.listener = listener
         viewModel.newList.observeForever(newObservable)
-        viewModel.getNews()
+   viewModel.getNewsPage(16)
 
         verify(newObservable).onChanged(newsResponse)
     }
+
 }

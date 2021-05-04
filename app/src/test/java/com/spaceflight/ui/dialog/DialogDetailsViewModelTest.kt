@@ -1,10 +1,13 @@
-package com.spaceflight.ui.home
+package com.spaceflight.ui.dialog
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import junit.framework.TestCase
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.spaceflight.network.response.NewsResponse
 import com.spaceflight.repository.NewsRepository
+import com.spaceflight.ui.fragment.NewsListener
+import com.spaceflight.ui.fragment.NewsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -23,19 +26,19 @@ import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner.Silent::class)
 @ExperimentalCoroutinesApi
-class HomeViewModelTest {
+class DialogDetailsViewModelTest {
     private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
 
-    private lateinit var viewModel: HomeViewModel
+    private lateinit var viewModel: DialogDetailsViewModel
 
     @Mock
     private lateinit var repository: NewsRepository
 
     @Mock
-    private lateinit var listener: HomeListener
+    private lateinit var listener: DialogListener
 
     @Mock
     private lateinit var newObservable: Observer<List<NewsResponse>>
@@ -44,19 +47,51 @@ class HomeViewModelTest {
     fun setup() {
         MockitoAnnotations.initMocks(this)
         Dispatchers.setMain(dispatcher)
-        viewModel = HomeViewModel(repository)
+        viewModel = DialogDetailsViewModel(repository)
 
     }
 
     @Test
-    fun getNewsError() = TestCoroutineDispatcher().runBlockingTest {
+    fun initViewModel() {
+        val newsResponse: List<NewsResponse> = arrayListOf()
+        viewModel.listener = listener
+        viewModel.newList.observeForever(newObservable)
+        viewModel.initViewModel()
+
+        verify(newObservable).onChanged(newsResponse)
+        verify(listener).onSearch()
+
+    }
+
+
+    @Test
+    fun saveClick() {
+        viewModel.listener = listener
+        viewModel.saveClick(
+            NewsResponse(
+                id = "1",
+                title = "teste",
+                summary = "teste descrição",
+                newsSite = "",
+                imageUrl = "",
+                featured = false,
+                url = "",
+                events = arrayListOf(),
+                launcher = arrayListOf()
+            )
+        )
+    }
+
+    @Test
+    fun getClick() = TestCoroutineDispatcher().runBlockingTest {
         val newsResponse: List<NewsResponse> = arrayListOf()
         Mockito.`when`(repository.getNews(1, 1)).thenReturn(Response.success(newsResponse))
 
         viewModel.listener = listener
         viewModel.newList.observeForever(newObservable)
-        viewModel.getNews()
+        viewModel.getNewsPage(16)
 
         verify(newObservable).onChanged(newsResponse)
     }
+
 }
