@@ -65,7 +65,7 @@ class DialogDetailsViewModelTest {
 
 
     @Test
-    fun saveClick() {
+    fun initViewModel() {
         viewModel.listener = listener
         viewModel.saveClick(
             NewsResponse(

@@ -4,4 +4,5 @@ import com.spaceflight.network.response.NewsResponse
 
 interface DialogListener {
     fun onClose()
+    fun onSearch()
 }
