@@ -10,6 +10,7 @@ import com.spaceflight.repository.NewsRepository
 class DialogDetailsViewModel(private val repository: NewsRepository) : ViewModel() {
 
     var listener: DialogListener? = null
+
     private val _newsList = MutableLiveData<NewsResponse>()
     val newList: LiveData<NewsResponse>
         get() = _newsList
@@ -18,15 +19,11 @@ class DialogDetailsViewModel(private val repository: NewsRepository) : ViewModel
         _newsList.postValue(repository.getClick())
     }
 
-    fun saveClick(newsResponse: NewsResponse) {
-        repository.saveClick(newsResponse)
+    fun onClose(view: View) {
+        onClose()
     }
 
-    fun onClose(view: View) {
+    fun onClose() {
         listener!!.onClose()
     }
 }
-
-
-
-
