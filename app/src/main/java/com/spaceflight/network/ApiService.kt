@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     object getNews {
-        operator fun invoke(limit: Int, start: Int) {
+        operator fun invoke(limit: NewsResponse, start: Int) {
 
         }
     }
