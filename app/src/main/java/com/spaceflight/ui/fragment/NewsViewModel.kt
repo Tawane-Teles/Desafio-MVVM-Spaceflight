@@ -26,12 +26,10 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel(), Corou
         _newsList.postValue(repository.getNews())
 
         listener!!.onSearch()
-
     }
 
     fun saveClick(newsResponse: NewsResponse){
         repository.saveClick(newsResponse)
-
     }
 
     fun getNewsPage(num: Int){
@@ -54,10 +52,7 @@ class NewsViewModel(private val repository: NewsRepository) : ViewModel(), Corou
                 }
             } catch (e: Exception){
                 _newsList.postValue(arrayListOf())
-
             }
         }
     }
-
-
 }

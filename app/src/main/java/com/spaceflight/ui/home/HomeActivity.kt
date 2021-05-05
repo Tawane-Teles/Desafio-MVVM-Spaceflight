@@ -18,14 +18,12 @@ class HomeActivity : AppCompatActivity(), HomeListener {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         initViewModel()
-
     }
 
     private fun initViewModel() {
         binding.viemodel = viewModel
         viewModel.listener = this
         viewModel.getNews()
-
     }
 
     override fun apiSuccess() {

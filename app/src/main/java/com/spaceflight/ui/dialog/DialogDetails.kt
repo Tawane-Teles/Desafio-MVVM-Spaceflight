@@ -20,6 +20,7 @@ class DialogDetails : DialogFragment(), DialogListener {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.FullScreenDialog)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,19 +38,15 @@ class DialogDetails : DialogFragment(), DialogListener {
 
     private fun iniViewModel() {
         viewModel.listener = this
-        viewModel.getClick()
+        viewModel.initViewModel()
 
-        viewModel.news.observe(requireActivity(), Observer<NewsResponse>{
+        viewModel.newList.observe(requireActivity(), Observer<NewsResponse> {
             binding.textView.text = it.summary
             Glide.with(binding.imageView2.context).load(it.imageUrl).into(binding.imageView2)
-
-
         })
-
     }
 
     override fun onClose() {
         dialog?.dismiss()
     }
-
 }

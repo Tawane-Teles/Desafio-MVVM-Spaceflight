@@ -16,7 +16,6 @@ import com.spaceflight.ui.adapter.NewsRecyclerAdapter
 import com.spaceflight.ui.dialog.DialogDetails
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class NewsFragment : Fragment(), NewsListener {
 
     private val viewModel: NewsViewModel by viewModel()
@@ -34,14 +33,11 @@ class NewsFragment : Fragment(), NewsListener {
         binding = FragmentNewsBinding.inflate(inflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         initViewModel()
-
     }
-
     private fun initViews() {
         binding.newList.layoutManager = LinearLayoutManager(context)
         binding.newList.adapter = adapterNews
@@ -54,7 +50,6 @@ class NewsFragment : Fragment(), NewsListener {
                         1
                     ) && newState == RecyclerView.SCROLL_STATE_IDLE
                 ) {
-
                     numPage + -15
                     viewModel.getNewsPage(numPage)
 
@@ -62,7 +57,6 @@ class NewsFragment : Fragment(), NewsListener {
             }
         })
     }
-
     private fun initViewModel() {
         binding.viewmodel = viewModel
         viewModel.listener = this
@@ -71,30 +65,22 @@ class NewsFragment : Fragment(), NewsListener {
         viewModel.newList.observe(requireActivity(), Observer<List<NewsResponse>> {
             adapterNews.items = it
             adapterNews.newsList = it
-
-
         })
-
     }
-
     private fun getNews(obj: NewsResponse) {
         viewModel.saveClick(obj)
         DialogDetails().show(requireActivity().supportFragmentManager, "Details")
-
     }
-
     override fun onSearch() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapterNews.filter.filter(query)
                 return true
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapterNews.filter.filter(newText)
                 return true
             }
-
         })
     }
 }
