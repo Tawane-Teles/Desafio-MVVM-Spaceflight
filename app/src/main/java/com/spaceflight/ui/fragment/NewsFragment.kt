@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.spaceflight.databinding.FragmentNewsBinding
+import com.spaceflight.databinding.FragmentNewsApiBinding
 import com.spaceflight.network.response.NewsResponse
 import com.spaceflight.ui.adapter.NewsRecyclerAdapter
 import com.spaceflight.ui.dialog.DialogDetails
@@ -19,7 +19,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class NewsFragment : Fragment(), NewsListener {
 
     private val viewModel: NewsViewModel by viewModel()
-    lateinit var binding: FragmentNewsBinding
+    lateinit var binding: FragmentNewsApiBinding
 
     private var adapterNews = NewsRecyclerAdapter(this::getNews)
 
@@ -30,7 +30,7 @@ class NewsFragment : Fragment(), NewsListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentNewsBinding.inflate(inflater, container, false)
+        binding = FragmentNewsApiBinding.inflate(inflater, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
