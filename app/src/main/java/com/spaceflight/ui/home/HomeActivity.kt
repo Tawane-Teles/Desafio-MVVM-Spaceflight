@@ -35,6 +35,6 @@ class HomeActivity : AppCompatActivity(), HomeListener {
 
     override fun apiError(message: String) {
         binding.progressBar.visibility = View.GONE
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+       Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
